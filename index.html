@@ -68,26 +68,32 @@ b,strong{font-weight:600}
 
 /* ---------- HERO ---------- */
 .hero{position:relative;background:var(--navy);color:var(--on-navy);overflow:hidden;isolation:isolate}
-.hero::before{ /* stadium lights + horizon glow */
-  content:"";position:absolute;inset:0;z-index:-1;
+.hero::before{ /* the stadium at kickoff, washed navy so type stays crisp */
+  content:"";position:absolute;inset:0;z-index:-2;
   background:
-    radial-gradient(60% 55% at 50% 100%,rgba(251,79,20,.42),rgba(251,79,20,0) 70%),
-    radial-gradient(40% 50% at 8% -10%,rgba(255,255,255,.10),transparent 70%),
-    radial-gradient(40% 50% at 92% -10%,rgba(255,255,255,.10),transparent 70%),
-    linear-gradient(180deg,#001326 0%,var(--navy) 55%,#0B2C52 100%);
+    radial-gradient(55% 45% at 50% 100%,rgba(251,79,20,.38),rgba(251,79,20,0) 70%),
+    linear-gradient(90deg,rgba(0,17,36,.97) 0%,rgba(0,24,50,.9) 34%,rgba(0,30,62,.58) 64%,rgba(0,30,62,.42) 100%),
+    linear-gradient(180deg,rgba(0,15,32,.75) 0%,rgba(0,15,32,0) 28%,rgba(0,15,32,0) 58%,rgba(0,34,68,.92) 100%),
+    url("img/stadium-kickoff.webp") 62% 38%/cover no-repeat,
+    var(--navy);
 }
-.hero::after{ /* faint yard lines */
-  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.5;
-  background:repeating-linear-gradient(90deg,transparent 0 119px,rgba(255,255,255,.035) 119px 120px);
-  -webkit-mask-image:linear-gradient(180deg,#000 0%,transparent 80%);mask-image:linear-gradient(180deg,#000 0%,transparent 80%);
+@media (max-width:760px){.hero::before{background:
+    radial-gradient(70% 40% at 50% 100%,rgba(251,79,20,.35),rgba(251,79,20,0) 70%),
+    linear-gradient(180deg,rgba(0,15,32,.72) 0%,rgba(0,22,46,.84) 30%,rgba(0,24,50,.92) 62%,rgba(0,34,68,.96) 100%),
+    url("img/stadium-kickoff.webp") 38% 0/cover no-repeat,var(--navy)}}
+.hero::after{ /* film grain */
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.14;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 .topbar{display:flex;justify-content:space-between;align-items:center;padding-top:calc(var(--sat) + 20px);font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--on-navy-muted)}
 .brand{display:inline-flex;align-items:center;gap:10px;color:var(--on-navy)}
-.brand i{width:9px;height:9px;border-radius:50%;background:var(--orange);box-shadow:0 0 0 4px rgba(251,79,20,.25)}
+.brand img{width:40px;height:auto;display:block}
+.brand b{font-weight:600;letter-spacing:.16em}
 .hero-body{padding-block:clamp(44px,6vw,80px) clamp(130px,11vw,170px);display:grid;gap:26px;position:relative}
-.hero-body::after{content:"5280";position:absolute;right:-.04em;top:50%;transform:translateY(-58%);z-index:-1;font-family:var(--f-display);font-weight:900;font-size:clamp(150px,19vw,300px);line-height:.8;letter-spacing:-.02em;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.08);pointer-events:none}
-@media (max-width:900px){.hero-body::after{display:none}}
 .hero .eyebrow{color:var(--orange)}
+.hero-logo{position:absolute;right:max(16px,env(safe-area-inset-right,0px));top:50%;transform:translateY(-62%);width:clamp(260px,30vw,460px);height:auto;filter:drop-shadow(0 30px 60px rgba(0,0,0,.5)) drop-shadow(0 0 80px rgba(251,79,20,.18));pointer-events:none}
+@media (min-width:720px){.hero-logo{right:max(32px,env(safe-area-inset-right,0px))}}
+@media (max-width:1060px){.hero-logo{display:none}}
 .hero h1{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(68px,11vw,152px);line-height:.84;letter-spacing:-.005em;max-width:12ch}
 .hero h1 span{display:block;color:var(--orange)}
 .lede{max-width:54ch;color:var(--on-navy-muted);font-size:clamp(17px,1.8vw,20px);line-height:1.55}
@@ -126,6 +132,7 @@ b,strong{font-weight:600}
 .nav{position:sticky;top:var(--sat);z-index:50;background:color-mix(in srgb,var(--navy) 92%,transparent);-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px)}
 .nav-in{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;padding-block:8px}
 .nav-in::-webkit-scrollbar{display:none}
+.nav-logo{flex:0 0 auto;align-self:center;width:34px;height:auto;margin-right:8px}
 .nav a{flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;color:var(--on-navy-muted);text-decoration:none;font-family:var(--f-mono);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:10px 12px;border-radius:8px;transition:color .2s,background .2s;min-height:40px}
 .nav a:hover{color:var(--on-navy);background:rgba(255,255,255,.06)}
 .nav a.on{color:var(--on-navy);background:rgba(251,79,20,.16)}
@@ -174,6 +181,22 @@ h3::before{content:"";flex:0 0 auto;width:20px;height:3px;border-radius:2px;back
 .done-when{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:baseline;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--orange);border-radius:var(--r-sm);padding:14px 18px;margin-top:24px;font-size:15px}
 .done-when b{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--orange-ink);font-weight:600}
 @media (max-width:480px){.done-when{grid-template-columns:1fr}}
+
+/* ---------- PHOTOGRAPHY ---------- */
+.photo{position:relative;margin:0 0 clamp(36px,5vw,56px);border-radius:20px;overflow:hidden;aspect-ratio:21/9;background:var(--navy);isolation:isolate}
+.photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s var(--ease)}
+.photo:hover img{transform:scale(1.025)}
+.photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,20,40,0) 45%,rgba(0,20,40,.78) 100%)}
+.photo figcaption{position:absolute;left:clamp(16px,3vw,28px);bottom:clamp(14px,2.5vw,24px);z-index:1;color:#fff;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+.photo figcaption::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--orange)}
+@media (max-width:640px){.photo{aspect-ratio:4/3;border-radius:16px}}
+.chapter{position:relative;isolation:isolate;overflow:hidden;color:#fff;min-height:clamp(320px,42vw,520px);display:grid;align-items:end}
+.chapter img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.chapter::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(0,17,36,.92) 0%,rgba(0,24,50,.7) 45%,rgba(0,24,50,.25) 100%),linear-gradient(0deg,rgba(0,17,36,.85),rgba(0,17,36,0) 55%)}
+.chapter .wrap{width:100%;padding-block:clamp(48px,7vw,88px);display:grid;gap:14px}
+.chapter .eyebrow{color:var(--orange)}
+.chapter p.big{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(48px,8vw,112px);line-height:.86;max-width:11ch}
+.chapter p.big span{color:var(--orange)}
 
 /* ---------- TIMELINE ---------- */
 .timeline{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));margin-top:4px}
@@ -414,11 +437,12 @@ details blockquote{margin:0;border-left:2px solid var(--orange);padding:4px 0 4p
 .callout p{color:var(--on-navy-muted);max-width:60ch;font-size:16px}
 
 /* ---------- FOOTER ---------- */
-footer{background:var(--navy);color:var(--on-navy-muted);position:relative;padding-block:clamp(64px,8vw,96px) calc(56px + env(safe-area-inset-bottom,0px));font-size:14px}
+footer{background:linear-gradient(180deg,rgba(0,22,46,.9),rgba(0,22,46,.97) 55%,var(--navy)),url("img/stadium-flag.webp") 50% 30%/cover no-repeat,var(--navy);color:var(--on-navy-muted);position:relative;padding-block:clamp(64px,8vw,96px) calc(56px + env(safe-area-inset-bottom,0px));font-size:14px}
 footer .wrap{display:grid;gap:18px}
 footer .eyebrow{color:var(--orange)}
 footer .sign{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(44px,8vw,96px);line-height:.85;color:var(--on-navy)}
 footer .sign span{color:var(--orange)}
+footer .flogo{width:clamp(110px,14vw,160px);height:auto;display:block;margin-bottom:8px;filter:drop-shadow(0 16px 40px rgba(0,0,0,.45))}
 footer a{color:var(--on-navy)}
 .sources{columns:2;column-gap:36px;padding-left:1.3em;margin:0}
 .sources li{break-inside:avoid;margin-bottom:8px}
@@ -441,7 +465,7 @@ footer .disc{border-top:1px solid rgba(255,255,255,.12);padding-top:18px;max-wid
 <script>document.documentElement.classList.add('js')</script>
 
 <header class="hero">
-  <div class="wrap topbar"><span class="brand"><i></i>Audition prep</span><span>2027 season</span></div>
+  <div class="wrap topbar"><span class="brand"><img src="img/broncos-logo.svg" alt="" width="40" height="23"><b>Road to Mile High</b></span><span>2027 season</span></div>
   <div class="wrap hero-body">
     <p class="eyebrow">Denver Broncos Cheerleaders &middot; 2027 auditions</p>
     <h1>Road to <span>Mile High</span></h1>
@@ -457,6 +481,7 @@ footer .disc{border-top:1px solid rgba(255,255,255,.12);padding-top:18px;max-wid
       <p class="sync" id="syncNote">Progress saves on this device</p>
     </div>
   </div>
+  <img class="hero-logo" src="img/broncos-logo.svg" alt="Denver Broncos" width="460" height="270">
   <span class="elev-tag" aria-hidden="true">Elev. 5,280 ft</span>
   <svg class="ridge" viewBox="0 0 1440 220" preserveAspectRatio="none" aria-hidden="true">
     <path class="far" d="M0 140 L70 118 L130 128 L205 86 L270 104 L345 58 L410 92 L470 76 L540 96 L610 34 L665 70 L720 58 L790 88 L860 50 L930 84 L1000 70 L1075 98 L1150 60 L1215 86 L1290 66 L1360 92 L1440 74 L1440 220 L0 220Z"/>
@@ -467,6 +492,7 @@ footer .disc{border-top:1px solid rgba(255,255,255,.12);padding-top:18px;max-wid
 
 <nav class="nav" aria-label="Course modules">
   <div class="wrap nav-in" id="navlinks">
+    <img class="nav-logo" src="img/broncos-logo.svg" alt="" width="34" height="20">
     <a href="#audition">Audition</a>
     <a href="#plan">Plan</a>
     <a href="#m1">01 Identity<span class="tick"></span></a>
@@ -486,6 +512,7 @@ footer .disc{border-top:1px solid rgba(255,255,255,.12);padding-top:18px;max-wid
 <!-- AUDITION -->
 <section class="block" id="audition"><div class="wrap">
   <div class="head rv"><p class="eyebrow">Know the field</p><h2>How Broncos auditions work</h2><p class="intro">Applications open in late March and finals wrap in late April. These are the 2026 dates; expect 2027 to land within a week or two of them.</p></div>
+  <figure class="photo rv"><img src="img/stadium-exterior.webp" alt="Empower Field at Mile High at golden hour" loading="lazy" width="1920" height="1284"><figcaption>Empower Field at Mile High</figcaption></figure>
   <div class="timeline rv">
     <div class="tl"><span class="d">EARLY MAR</span><b>Audition workshop</b><p>Learn a combo, across-the-floor, technique at Empower Field</p></div>
     <div class="tl"><span class="d">MAR 27</span><b>Application due</b><p>Online application, headshot and resume</p></div>
@@ -530,6 +557,11 @@ footer .disc{border-top:1px solid rgba(255,255,255,.12);padding-top:18px;max-wid
     </tbody>
   </table></div>
 </div></section>
+
+<section class="chapter" aria-label="The climb starts here">
+  <img class="bg" src="img/stadium-aerial.webp" alt="" loading="lazy" width="1920" height="1280">
+  <div class="wrap rv"><span class="eyebrow">Seven modules &middot; one climb</span><p class="big">The climb <span>starts here</span></p></div>
+</section>
 
 <!-- M1 -->
 <section class="block mod" id="m1"><div class="wrap mgrid">
@@ -891,6 +923,7 @@ Public speaking  |  Social content  |  [Language]  |  [Two real interests they c
 </main>
 
 <footer><div class="wrap">
+  <img class="flogo" src="img/broncos-logo.svg" alt="" width="160" height="94" loading="lazy">
   <p class="sign">See you at <span>Mile High</span></p>
   <p class="eyebrow" style="margin-top:18px">Sources</p>
   <ol class="sources">
@@ -907,7 +940,7 @@ Public speaking  |  Social content  |  [Language]  |  [Two real interests they c
     <li><a href="https://www.chiefs.com/news/2013-chiefs-cheerleader-auditions-9622346">Chiefs audition stations recap</a></li>
     <li><a href="https://en.wikipedia.org/wiki/2026_Denver_Broncos_season">2026 Denver Broncos season</a></li>
   </ol>
-  <p class="disc">An unofficial, personal prep course. Not affiliated with or endorsed by the Denver Broncos. Dates and requirements are from 2026; confirm everything on the 2027 posting.</p>
+  <p class="disc">An unofficial, personal prep course. Not affiliated with or endorsed by the Denver Broncos. Dates and requirements are from 2026; confirm everything on the 2027 posting. Photos via Wikimedia Commons: Jeffrey Beall (CC BY-SA 2.0), Pdubs.94 (CC BY-SA 4.0), Heath Alseike (CC BY 2.0).</p>
 </div></footer>
 
 <div class="toast" id="toast" role="status"></div>
