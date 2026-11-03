@@ -349,14 +349,29 @@ input[type=text]:focus,textarea:focus{outline:0;border-color:var(--orange);box-s
 .card-in{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px}
 .card-in input[type=text]{background:var(--surface-2);border-color:transparent;min-height:48px}
 .card-in input[type=text]:focus{border-color:var(--orange)}
-/* quiz: quieter controls, grading appears once the answer is open */
-.qlist .qcard .acts button.reveal{background:transparent;color:var(--orange-ink);border-color:transparent;padding-left:0;padding-right:4px;display:inline-flex;align-items:center;gap:8px}
-.qlist .qcard .acts button.reveal::after{content:"";width:7px;height:7px;border-right:1.8px solid currentColor;border-bottom:1.8px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .25s var(--ease)}
-.qlist .qcard.open .acts button.reveal::after{transform:rotate(-135deg) translateY(-2px)}
-.qlist .qcard .acts button.reveal:hover{border-color:transparent;text-decoration:underline;text-underline-offset:3px}
-.qlist .qcard:not(.open) .acts .got,.qcard:not(.open) .acts .miss{display:none}
-.qlist .qcard .acts .got,.qcard .acts .miss{min-height:32px;padding:5px 13px;font-size:12.5px}
-.qlist .qcard .ans{border-left:2px solid var(--orange);border-radius:0 10px 10px 0}
+/* quiz: tap the question to open it, then grade yourself */
+.qlist .qcard{padding:0;gap:0}
+.qlist .qcard .top{all:unset;box-sizing:border-box;width:100%;display:grid;grid-template-columns:34px minmax(0,1fr) 22px;gap:10px;align-items:baseline;padding:16px 18px;cursor:pointer;color:var(--fg);font-family:var(--f-body);-webkit-tap-highlight-color:transparent;transition:background .15s}
+.qlist .qcard .top:hover{background:color-mix(in srgb,var(--surface) 60%,var(--surface-2))}
+.qlist .qcard .top:focus-visible{outline:2px solid var(--orange);outline-offset:-2px;border-radius:var(--r)}
+.qlist .qcard .qq{font-weight:500;font-size:16px;line-height:1.45}
+.qlist .qcard .chev{align-self:center;justify-self:end;width:22px;height:22px;border-radius:50%;border:1px solid var(--line-2);position:relative;transition:background .2s,border-color .2s,transform .3s var(--ease)}
+.qlist .qcard .chev::after{content:"";position:absolute;left:7px;top:6px;width:6px;height:6px;border-right:1.6px solid var(--muted);border-bottom:1.6px solid var(--muted);transform:rotate(45deg)}
+.qlist .qcard.open .chev{transform:rotate(180deg);background:var(--orange);border-color:var(--orange)}
+.qlist .qcard.open .chev::after{border-color:#fff}
+.qlist .qcard .ans{margin:0 18px 16px 62px;padding:14px 16px;background:var(--surface-2);border-radius:12px;border:0;display:grid;gap:14px}
+.qlist .qcard .ans[hidden]{display:none}
+.qlist .qcard .ans p{font-size:15.5px;line-height:1.5;font-weight:500}
+.qlist .qcard .acts{margin:0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.qlist .qcard .acts button{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;border-radius:10px;border:1px solid var(--line-2);background:var(--surface);font-family:var(--f-body);font-size:14px;font-weight:600;color:var(--fg);cursor:pointer;transition:background .15s,border-color .15s,color .15s,transform .15s}
+.qlist .qcard .acts button:active{transform:scale(.97)}
+.qlist .qcard .acts svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.qlist .qcard .acts .got svg{color:var(--good)}
+.qlist .qcard .acts .miss svg{color:var(--bad)}
+.qlist .qcard .acts button[aria-pressed=true].got{background:var(--good);border-color:var(--good);color:#fff}
+.qlist .qcard .acts button[aria-pressed=true].miss{background:var(--bad);border-color:var(--bad);color:#fff}
+.qlist .qcard .acts button[aria-pressed=true] svg{color:#fff}
+@media (max-width:480px){.qlist .qcard .ans{margin-left:18px}}
 @media (max-width:600px){
   .tablewrap.stack thead{display:none}
   .tablewrap.stack table,.tablewrap.stack tbody{display:block}
@@ -1066,18 +1081,17 @@ Public speaking  |  Social content  |  [Language]  |  [Two real interests they c
     part[1].forEach(function(item){
       total++;var id='q'+total;var st=qs[id]||{};
       var c=document.createElement('div');c.className='qcard';c.dataset.id=id;
-      c.innerHTML='<div class="top"><span class="n">'+String(total).padStart(2,'0')+'</span><span class="qq">'+item[0]+'</span></div>'+
-        '<div class="ans" hidden>'+item[1]+'</div>'+
-        '<div class="acts"><button type="button" class="reveal">Show answer</button>'+
-        '<button type="button" class="got" aria-pressed="false">Got it</button>'+
-        '<button type="button" class="miss" aria-pressed="false">Missed</button></div>';
+      c.innerHTML='<button type="button" class="top reveal" aria-expanded="false"><span class="n">'+String(total).padStart(2,'0')+'</span><span class="qq">'+item[0]+'</span><span class="chev" aria-hidden="true"></span></button>'+
+        '<div class="ans" hidden><p>'+item[1]+'</p>'+
+        '<div class="acts" role="group" aria-label="How did you do?"><button type="button" class="got" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 4.8"/></svg>Got it</button>'+
+        '<button type="button" class="miss" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg>Missed</button></div></div>';
       list.appendChild(c);apply(c,st);
     });
   });
   document.getElementById('qTotal').textContent=total;
   function apply(c,st){
     var ans=c.querySelector('.ans');var rev=c.querySelector('.reveal');
-    ans.hidden=!st.open;rev.textContent=st.open?'Hide answer':'Show answer';
+    ans.hidden=!st.open;rev.setAttribute('aria-expanded',!!st.open);
     c.querySelector('.got').setAttribute('aria-pressed',st.mark==='got');
     c.querySelector('.miss').setAttribute('aria-pressed',st.mark==='miss');
     c.classList.toggle('open',!!st.open);c.classList.toggle('got',st.mark==='got');c.classList.toggle('miss',st.mark==='miss');
