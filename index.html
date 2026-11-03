@@ -330,6 +330,50 @@ input[type=text]:focus,textarea:focus{outline:0;border-color:var(--orange);box-s
 .paper ul{margin:2px 0 0;padding-left:18px;display:grid;gap:3px;color:#2A2E35}
 .paper li::marker{color:#9AA0A8}
 
+
+/* ---------- POLISH PASS ---------- */
+.toolbox{gap:14px}
+.story{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px 18px 12px;display:grid;gap:12px;transition:border-color .2s,box-shadow .25s}
+.story:focus-within{border-color:color-mix(in srgb,var(--orange) 60%,var(--line));box-shadow:0 0 0 4px color-mix(in srgb,var(--orange) 12%,transparent),0 18px 40px -24px rgba(0,0,0,.45)}
+.story-head{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start}
+.sn{font-family:var(--f-display);font-weight:900;font-size:34px;line-height:.8;color:transparent;-webkit-text-stroke:1.4px var(--orange);font-variant-numeric:tabular-nums;padding-top:2px}
+.st{display:grid;gap:3px}
+.st label{font-weight:600;font-size:16px;line-height:1.35}
+.st small{color:var(--muted);font-size:13.5px}
+.story textarea{border:0;background:var(--surface-2);border-radius:12px;min-height:112px;padding:14px 16px;line-height:1.55;resize:none;overflow:hidden}
+.story textarea:focus{box-shadow:none;outline:0;background:color-mix(in srgb,var(--surface-2) 80%,var(--surface))}
+.story-foot{display:flex;justify-content:flex-end}
+.wc{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+.wc.on{color:var(--fg)}
+.wc.on::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--good)}
+.card-in{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px}
+.card-in input[type=text]{background:var(--surface-2);border-color:transparent;min-height:48px}
+.card-in input[type=text]:focus{border-color:var(--orange)}
+/* quiz: quieter controls, grading appears once the answer is open */
+.qlist .qcard .acts button.reveal{background:transparent;color:var(--orange-ink);border-color:transparent;padding-left:0;padding-right:4px;display:inline-flex;align-items:center;gap:8px}
+.qlist .qcard .acts button.reveal::after{content:"";width:7px;height:7px;border-right:1.8px solid currentColor;border-bottom:1.8px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .25s var(--ease)}
+.qlist .qcard.open .acts button.reveal::after{transform:rotate(-135deg) translateY(-2px)}
+.qlist .qcard .acts button.reveal:hover{border-color:transparent;text-decoration:underline;text-underline-offset:3px}
+.qlist .qcard:not(.open) .acts .got,.qcard:not(.open) .acts .miss{display:none}
+.qlist .qcard .acts .got,.qcard .acts .miss{min-height:32px;padding:5px 13px;font-size:12.5px}
+.qlist .qcard .ans{border-left:2px solid var(--orange);border-radius:0 10px 10px 0}
+@media (max-width:600px){
+  .tablewrap.stack thead{display:none}
+  .tablewrap.stack table,.tablewrap.stack tbody{display:block}
+  .tablewrap.stack tr{display:grid;gap:8px;padding:16px 18px;border-bottom:1px solid var(--line)}
+  .tablewrap.stack tr:last-child{border-bottom:0}
+  .tablewrap.stack td{display:grid;grid-template-columns:92px 1fr;gap:12px;padding:0;border:0;font-size:14.5px;line-height:1.45}
+  .tablewrap.stack td::before{content:attr(data-label);font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;padding-top:3px}
+  .tablewrap.stack td:first-child{grid-template-columns:1fr;font-size:17px;font-weight:600;margin-bottom:2px}
+  .tablewrap.stack td:first-child::before{display:none}
+}
+@media (max-width:999px){
+  .rail-in{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:end;gap:10px 18px}
+  .mnum{grid-row:span 2}
+  .rail-meta{padding-bottom:0}
+  .rail-meta,.mprog{min-width:0}
+  .rail-in:not(:has(.mprog)) .mnum{grid-row:auto}
+}
 /* ---------- BUTTONS ---------- */
 .btn{font:inherit;font-weight:600;font-size:14px;border:0;border-radius:10px;padding:11px 18px;min-height:44px;cursor:pointer;background:var(--orange);color:#fff;display:inline-flex;gap:8px;align-items:center;justify-content:center;transition:transform .15s var(--ease),filter .15s,background .15s}
 .btn:hover{filter:brightness(1.07)}
@@ -576,7 +620,7 @@ footer .disc{border-top:1px solid rgba(255,255,255,.12);padding-top:18px;max-wid
 
     <h3>Build your identity line</h3>
     <div class="builder rv">
-      <div class="fields">
+      <div class="fields card-in">
         <div class="field"><label for="id-who">What you do</label><input type="text" id="id-who" placeholder="a dental hygienist / a nursing student"></div>
         <div class="field"><label for="id-years">Years dancing</label><input type="text" id="id-years" placeholder="18"></div>
         <div class="field"><label for="id-cause">A cause you give time to</label><input type="text" id="id-cause" placeholder="a youth dance nonprofit"></div>
@@ -592,11 +636,21 @@ footer .disc{border-top:1px solid rgba(255,255,255,.12);padding-top:18px;max-wid
     <h3>Your interview toolbox: 5 stories</h3>
     <p class="muted sub">Every answer in the interview steers back to one of these. Write a few sentences each: what happened, what you did, what it shows.</p>
     <div class="toolbox rv">
-      <div class="field"><label for="tb-1">1. Your dance journey, and why you're ready now</label><textarea id="tb-1"></textarea></div>
-      <div class="field"><label for="tb-2">2. A career or school accomplishment</label><small>Shows you're well-rounded off the field.</small><textarea id="tb-2"></textarea></div>
-      <div class="field"><label for="tb-3">3. A community or volunteer moment</label><small>Half this job is appearances: schools, hospitals, sponsors.</small><textarea id="tb-3"></textarea></div>
-      <div class="field"><label for="tb-4">4. A setback you handled well</label><textarea id="tb-4"></textarea></div>
-      <div class="field"><label for="tb-5">5. Your personal Broncos or Denver connection</label><textarea id="tb-5"></textarea></div>
+      <div class="story"><div class="story-head"><span class="sn">01</span><div class="st"><label for="tb-1">Your dance journey, and why you're ready now</label></div></div>
+        <textarea id="tb-1" rows="3" placeholder="What happened, what you did, what it shows."></textarea>
+        <div class="story-foot"><span class="wc" data-for="tb-1">Not started</span></div></div>
+      <div class="story"><div class="story-head"><span class="sn">02</span><div class="st"><label for="tb-2">A career or school accomplishment</label><small>Shows you're well-rounded off the field.</small></div></div>
+        <textarea id="tb-2" rows="3" placeholder="What happened, what you did, what it shows."></textarea>
+        <div class="story-foot"><span class="wc" data-for="tb-2">Not started</span></div></div>
+      <div class="story"><div class="story-head"><span class="sn">03</span><div class="st"><label for="tb-3">A community or volunteer moment</label><small>Half this job is appearances: schools, hospitals, sponsors.</small></div></div>
+        <textarea id="tb-3" rows="3" placeholder="What happened, what you did, what it shows."></textarea>
+        <div class="story-foot"><span class="wc" data-for="tb-3">Not started</span></div></div>
+      <div class="story"><div class="story-head"><span class="sn">04</span><div class="st"><label for="tb-4">A setback you handled well</label></div></div>
+        <textarea id="tb-4" rows="3" placeholder="What happened, what you did, what it shows."></textarea>
+        <div class="story-foot"><span class="wc" data-for="tb-4">Not started</span></div></div>
+      <div class="story"><div class="story-head"><span class="sn">05</span><div class="st"><label for="tb-5">Your personal Broncos or Denver connection</label></div></div>
+        <textarea id="tb-5" rows="3" placeholder="What happened, what you did, what it shows."></textarea>
+        <div class="story-foot"><span class="wc" data-for="tb-5">Not started</span></div></div>
     </div>
 
     <h3>Social media audit</h3>
@@ -755,7 +809,7 @@ Public speaking  |  Social content  |  [Language]  |  [Two real interests they c
 
     <h3>Mock interview scorecard</h3>
     <p class="muted sub">Score each filmed answer 1&ndash;3 on all five. Target: 13 or more out of 15, every answer.</p>
-    <div class="tablewrap score rv"><table>
+    <div class="tablewrap score stack rv"><table>
       <thead><tr><th>Criterion</th><th>Scores a 1</th><th>Scores a 3</th></tr></thead>
       <tbody>
         <tr><td>Length</td><td>Over 90 seconds, or under 15</td><td>30&ndash;60 seconds</td></tr>
@@ -908,7 +962,7 @@ Public speaking  |  Social content  |  [Language]  |  [Two real interests they c
 <!-- RESOURCES -->
 <section class="block" id="resources"><div class="wrap">
   <div class="head rv"><p class="eyebrow">Beyond this course</p><h2>Resources</h2><p class="intro">This page is the method. The paid programs add a real person grading your answers and paperwork, which is why the scholarship is still worth applying for.</p></div>
-  <div class="tablewrap rv"><table>
+  <div class="tablewrap stack rv"><table>
     <thead><tr><th>Resource</th><th>What it covers</th><th>Cost</th></tr></thead>
     <tbody>
       <tr><td><a href="https://www.thepreptalk.com/">The Prep Talk</a></td><td>Resume, cover letter, application, interview toolbox, question types, mock interviews</td><td>Free prep guide; scholarship; paid e-courses and 1:1</td></tr>
@@ -1026,7 +1080,7 @@ Public speaking  |  Social content  |  [Language]  |  [Two real interests they c
     ans.hidden=!st.open;rev.textContent=st.open?'Hide answer':'Show answer';
     c.querySelector('.got').setAttribute('aria-pressed',st.mark==='got');
     c.querySelector('.miss').setAttribute('aria-pressed',st.mark==='miss');
-    c.classList.toggle('got',st.mark==='got');c.classList.toggle('miss',st.mark==='miss');
+    c.classList.toggle('open',!!st.open);c.classList.toggle('got',st.mark==='got');c.classList.toggle('miss',st.mark==='miss');
   }
   function tally(){var g=0;Object.keys(qs).forEach(function(k){if(qs[k].mark==='got')g++;});document.getElementById('qScore').textContent=g;document.getElementById('qPct').textContent=Math.round(g/total*100)+'%';}
   qEl.addEventListener('click',function(e){
@@ -1096,6 +1150,11 @@ Public speaking  |  Social content  |  [Language]  |  [Two real interests they c
   function slot(id,ph){var v=(document.getElementById(id).value||'').trim();return v?esc(v):'<span class="blank">'+ph+'</span>';}
   function line(){document.getElementById('idLine').innerHTML="I'm "+slot('id-who','what you do')+" who's danced for "+slot('id-years','X')+" years and gives my time to "+slot('id-cause','a cause')+", and I want to bring "+slot('id-bring','what you bring')+" to Broncos Country.";}
   line();
+  function grow(el){if(el.tagName!=='TEXTAREA')return;el.style.height='auto';el.style.height=Math.max(112,el.scrollHeight+2)+'px';}
+  function wc(el){var w=document.querySelector('.wc[data-for="'+el.id+'"]');if(!w)return;var n=(el.value.trim().match(/\S+/g)||[]).length;w.textContent=n?n+(n===1?' word':' words'):'Not started';w.classList.toggle('on',n>0);}
+  ids.forEach(function(id){var el=document.getElementById(id);grow(el);wc(el);el.addEventListener('input',function(){grow(el);wc(el);});});
+  window.addEventListener('resize',function(){ids.forEach(function(id){grow(document.getElementById(id));});});
+  [].forEach.call(document.querySelectorAll('.tablewrap.stack table'),function(t){var hs=[].map.call(t.querySelectorAll('thead th'),function(h){return h.textContent;});[].forEach.call(t.querySelectorAll('tbody tr'),function(r){[].forEach.call(r.children,function(td,k){td.setAttribute('data-label',hs[k]||'');});});});
 
   /* copy */
   document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){
@@ -1162,7 +1221,7 @@ Public speaking  |  Social content  |  [Language]  |  [Two real interests they c
   function applyAll(s){
     state=s||{};qs=state.quiz||{};ck=state.checks||{};tf=state.text||{};
     checks.forEach(function(i){i.checked=!!ck[i.id];});progress();
-    ids.forEach(function(id){var el=document.getElementById(id);if(document.activeElement!==el)el.value=tf[id]||'';});line();
+    ids.forEach(function(id){var el=document.getElementById(id);if(document.activeElement!==el)el.value=tf[id]||'';grow(el);wc(el);});line();
     [].forEach.call(qEl.querySelectorAll('.qcard'),function(c){apply(c,qs[c.dataset.id]||{});});tally();
   }
   function pull(){
